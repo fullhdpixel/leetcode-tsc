@@ -1,47 +1,41 @@
-function shouldReduce(s: string) {
-  return (
-    s === "CM" ||
-    s === "CD" ||
-    s === "XC" ||
-    s === "XL" ||
-    s === "IX" ||
-    s === "IV"
-  );
+type RomanChar = "I" | "V" | "X" | "L" | "C" | "D" | "M";
+type RomanSpecialChar = "CM" | "CD" | "XC" | "XL" | "IX" | "IV";
+
+const RomanValues: Record<RomanChar, number> = {
+  I: 1,
+  V: 5,
+  X: 10,
+  L: 50,
+  C: 100,
+  D: 500,
+  M: 1000,
+};
+
+const RomanSpecialValues: Record<RomanSpecialChar, number> = {
+  CM: 900,
+  CD: 400,
+  XC: 90,
+  XL: 40,
+  IX: 9,
+  IV: 4,
+};
+
+const AllRomanChars = Object.keys({
+  ...RomanValues,
+  ...RomanSpecialValues,
+});
+
+function isRomanSpecialValue(s: string) {
+  return Object.keys(RomanSpecialValues).includes(s);
 }
 
 // This function name is incorrect
-function getValueForRomanChars(s: string): number {
-  switch (s) {
-    case "CM":
-      return 900;
-    case "CD":
-      return 400;
-    case "XC":
-      return 90;
-    case "XL":
-      return 40;
-    case "IX":
-      return 9;
-    case "IV":
-      return 4;
+function getValueForRomanSpecialChars(s: string): number {
+  return RomanSpecialValues[s as RomanSpecialChar];
+}
 
-    case "I":
-      return 1;
-    case "V":
-      return 5;
-    case "X":
-      return 10;
-    case "L":
-      return 50;
-    case "C":
-      return 100;
-    case "D":
-      return 500;
-    case "M":
-      return 1000;
-    default:
-      return 0;
-  }
+function getValueForRomanChars(s: string): number {
+  return RomanValues[s as RomanChar];
 }
 
 /**
@@ -54,8 +48,8 @@ function romanToInt(s: string): number {
   while (i < s.length) {
     let multiChars = s.charAt(i) + s.charAt(i + 1);
 
-    if (shouldReduce(multiChars)) {
-      result += getValueForRomanChars(multiChars);
+    if (isRomanSpecialValue(multiChars)) {
+      result += getValueForRomanSpecialChars(multiChars);
       i += 2;
     } else {
       result += getValueForRomanChars(s[i]);
