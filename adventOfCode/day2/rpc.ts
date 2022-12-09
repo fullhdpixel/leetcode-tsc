@@ -5,13 +5,13 @@ type ShapeOpponent = "A" | "B" | "C"; // Rock (A), Paper (B), Scissors (C)
 type ShapeMyself = "X" | "Y" | "Z"; // Rock (X), Paper (Y), Scissors (Z)
 type ShapeScore = 1 | 2 | 3;
 
-const shapeScore: Record<ShapeMyself, ShapeScore> = {
+export const shapeScore: Record<ShapeMyself, ShapeScore> = {
   "X": 1,
   "Y": 2,
   "Z": 3
 }
 
-const roundScore: Record<RoundResolution, RoundScore> = {
+export const roundScore: Record<RoundResolution, RoundScore> = {
   "lost": 0,
   "draw": 3,
   "won": 6,
@@ -31,7 +31,7 @@ const winning: Record<ShapeOpponent, ShapeMyself> = {
 }
 
 
-function getMatchResolution([opponent, myself]: [ShapeOpponent, ShapeMyself]): RoundResolution {
+export function getMatchResolution([opponent, myself]: [ShapeOpponent, ShapeMyself]): RoundResolution {
   if (draw[opponent] === myself) {
     return "draw"
   } else if (winning[opponent] === myself) {
